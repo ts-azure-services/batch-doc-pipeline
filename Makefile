@@ -6,7 +6,7 @@ venv-setup:
 	rm -rf .venv
 	python3.11 -m venv .venv
 	.venv/bin/python -m pip install --upgrade pip
-	.venv/bin/python -m pip install -r ./requirements.txt
+	# .venv/bin/python -m pip install -r ./requirements.txt
 
 sub-init:
 	echo "SUB_ID=<enter subscription name>" > sub.env
@@ -27,10 +27,10 @@ create-env:
 pdf_blob=$(shell cat variables.env | grep "BLOB_CONTAINER_PDF" | cut -d "=" -f 2 | xargs)
 text_blob=$(shell cat variables.env | grep "BLOB_CONTAINER_TXT" | cut -d "=" -f 2 | xargs)
 create-datastores:
-	.venv/bin/python ./common/datastore.py --container_name $(pdf_blob) \
+	.venv/bin/python ./setup/datastore.py --container_name $(pdf_blob) \
 		--datastore_name "pdfinputfiles" \
 		--datastore_desc "PDF input files"
-	.venv/bin/python ./common/datastore.py --container_name $(text_blob) \
+	.venv/bin/python ./setup/datastore.py --container_name $(text_blob) \
 		--datastore_name "textfiles" \
 		--datastore_desc "Final text files"
 
