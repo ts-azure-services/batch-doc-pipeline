@@ -26,7 +26,7 @@ if __name__ == "__main__":
         display_name="Convert PDF documents to text files",
         description="Convert PDF documents to text files",
         inputs=dict(job_data_path=Input(type=AssetTypes.URI_FOLDER,)),
-        # input_data="${{inputs.job_data_path}}",
+        input_data="${{inputs.job_data_path}}",
         outputs=dict(job_output_path=Output(type=AssetTypes.URI_FOLDER)),
         instance_count=4,
         max_concurrency_per_instance=2,
