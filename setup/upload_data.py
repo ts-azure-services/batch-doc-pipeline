@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
     load_dotenv('./variables.env')
     connection_string = os.environ["STORAGE_CONN_STRING"]
-    container_name = os.environ["BLOB_CONTAINER"]
+    container_name = os.environ["BLOB_CONTAINER_PDF"]
 
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 

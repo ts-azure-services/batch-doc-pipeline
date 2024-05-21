@@ -48,9 +48,12 @@ upload-files:
 
 
 # Run ML pipeline
+primary_datastore="azureml://datastores/pdfinputfiles/paths/"
+output_datastore="azureml://datastores/textfiles/paths/"
 run-pipeline:
-	.venv/bin/python ./ml-pipeline/main.py
-
+	.venv/bin/python ./ml-pipeline/main.py \
+		--input_datastore $(primary_datastore) \
+		--output_datastore $(output_datastore)
 
 # Commit local branch changes
 branch=$(shell git symbolic-ref --short HEAD)

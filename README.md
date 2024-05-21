@@ -11,7 +11,10 @@
 - cloud testing: actually create and write to the blob store directly
   
 - How does it select files?
+
 - does this have to be enabled for hierarchial namespace?
+
+- note that you have to input the endpoint key. Can we make that in through key vault?
 
 https://learn.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-data-access?view=azureml-api-2
 

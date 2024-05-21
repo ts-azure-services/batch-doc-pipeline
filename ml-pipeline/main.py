@@ -1,11 +1,11 @@
+import os
 import argparse
 from azure.ai.ml.constants import AssetTypes
 from azure.ai.ml import dsl, Input, Output
 from azure.ai.ml.parallel import parallel_run_function, RunFunction
-import os.path
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
-from common.authenticate import ml_client
+from azure.ai.ml import MLClient
+from azure.identity import EnvironmentCredential # DefaultAzureCredential
+from dotenv import load_dotenv
 
 # # Paths for output to be persisted
 # blob_store_path="azureml://datastores/workspaceblobstore/paths/parallel-pipeline-pdf-images/"
@@ -13,9 +13,15 @@ from common.authenticate import ml_client
 
 
 if __name__ == "__main__":
+    load_dotenv('./variables.env')
+    
+    ml_client = MLClient(credential=EnvironmentCredential(),
+                     subscription_id=os.environ['SUB_ID'],
+                     resource_group_name=os.environ['RESOURCE_GROUP'],
+                     workspace_name=os.environ['WORKSPACE_NAME'],
+                         )
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_datastore", type=str)
-    parser.add_argument("--intermediate_datastore", type=str)
     parser.add_argument("--output_datastore", type=str)
     args = parser.parse_args()
 
