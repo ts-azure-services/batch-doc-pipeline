@@ -20,7 +20,7 @@ create-cluster:
 	.venv/bin/python ./setup/cluster.py
 
 create-env:
-	.venv/bin/python ./setup/env.py --name "read-docs" \
+	.venv/bin/python ./setup/env.py --name "form-rec-env" \
 		--conda_file "./setup/form-rec-env.yml"
 
 

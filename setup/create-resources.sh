@@ -17,7 +17,7 @@ sub_id=$SUB_ID
 az account set -s $sub_id
 
 # Source unique name for RG, workspace creation
-unique_name='doc-pipeline'
+unique_name='batch-pipeline'
 number=$[ ( $RANDOM % 10000 ) + 1 ]
 resourcegroup=$unique_name$number
 workspacename=$unique_name$number'ws'

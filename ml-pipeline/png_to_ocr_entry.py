@@ -3,10 +3,6 @@ import os
 import argparse
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
-from dotenv import load_dotenv
-# import sys
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
-# from common.authenticate import document_analysis_client
 
 
 def init():
@@ -16,18 +12,7 @@ def init():
     args, _ = parser.parse_known_args()
     OUTPUT_PATH = args.job_output_path
 
-    # # Declare document_analysis_client globally
-    # load_dotenv('./../variables.env')
-    # auth_dict = {
-    #         "key": os.environ['COG_KEY'],
-    #         "endpoint": os.environ['ENDPOINT'],
-    #         }
-    #
     global document_analysis_client
-    # document_analysis_client = DocumentAnalysisClient(
-    #         endpoint=auth_dict['endpoint'],
-    #         credential=AzureKeyCredential(auth_dict['key']),
-    # )
     document_analysis_client = DocumentAnalysisClient(
             endpoint='https://westus.api.cognitive.microsoft.com/',
             credential=AzureKeyCredential('<enter your key>'),
@@ -62,7 +47,7 @@ def get_ocr_from_image(file_path):
     # Create the output path for the recognizer output
     image_directory = file_path.split('/')[-2:][0]
     image_filename = file_path.split('/')[-2:][1]
-    image_filename = image_filename.replace('png', 'txt')
+    image_filename = image_filename.replace('pdf', 'txt')
 
     # Create outputPath with the directory
     outputPath = OUTPUT_PATH + '/' + str(image_directory)
