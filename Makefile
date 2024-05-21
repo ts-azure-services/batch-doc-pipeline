@@ -21,27 +21,30 @@ create-cluster:
 
 create-env:
 	.venv/bin/python ./setup/env.py --name "read-docs" \
-		--conda_file "./config/form-rec-env.yml"
+		--conda_file "./setup/form-rec-env.yml"
 
-# Change default blob store to an ADLS by changing 'Hierarchial namespace'. Ensure above operation completes.
-# Upload sample pdf files from /data/ to folder `pdf-inputs`, under the default blob store
 
-## Local file testing
+pdf_blob=$(shell cat variables.env | grep "BLOB_CONTAINER_PDF" | cut -d "=" -f 2 | xargs)
+text_blob=$(shell cat variables.env | grep "BLOB_CONTAINER_TXT" | cut -d "=" -f 2 | xargs)
+create-datastores:
+	.venv/bin/python ./common/datastore.py --container_name $(pdf_blob) \
+		--datastore_name "pdfinputfiles" \
+		--datastore_desc "PDF input files"
+	.venv/bin/python ./common/datastore.py --container_name $(text_blob) \
+		--datastore_name "textfiles" \
+		--datastore_desc "Final text files"
+
+## If running in the cloud shell, upload the azure-ai-studio pdf
+# Then, use the script below to generate several files and upload to blob
 input_file="./azure-ai-studio.pdf"
 number_of_pdfs=5
 create-pdfs:
 	rm -rf ./pdf-files
 	mkdir -p ./pdf-files
-	.venv/bin/python ./local-file-creation/create_pdfs.py --input_file=$(input_file) --number_of_pdfs=$(number_of_pdfs)
+	.venv/bin/python ./setup/create_pdfs.py --input_file=$(input_file) --number_of_pdfs=$(number_of_pdfs)
 
 upload-files:
-	.venv/bin/python ./local-file-creation/upload_data.py
-
-data_input_file="./pdf-files/15035e58-dca0-49fa-928c-0f9dae008d92.pdf"
-output_path="./pdf-files/sample.txt"
-test-pdf:
-	.venv/bin/python ./local-file-creation/pdf_model.py --data_input_file=$(data_input_file) \
-		--output_path=$(output_path)
+	.venv/bin/python ./setup/upload_data.py
 
 
 # Run ML pipeline

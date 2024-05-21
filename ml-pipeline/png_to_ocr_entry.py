@@ -1,10 +1,13 @@
 """Script to create images from PDF files"""
 import os
 import argparse
-# from azure.ai.formrecognizer import DocumentAnalysisClient
-from azure.ai.documentintelligence import DocumentIntelligenceClient
+from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
+# import sys
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+# from common.authenticate import document_analysis_client
+
 
 def init():
     global OUTPUT_PATH
@@ -13,10 +16,21 @@ def init():
     args, _ = parser.parse_known_args()
     OUTPUT_PATH = args.job_output_path
 
+    # # Declare document_analysis_client globally
+    # load_dotenv('./../variables.env')
+    # auth_dict = {
+    #         "key": os.environ['COG_KEY'],
+    #         "endpoint": os.environ['ENDPOINT'],
+    #         }
+    #
     global document_analysis_client
-    document_analysis_client = DocumentIntelligenceClient(
+    # document_analysis_client = DocumentAnalysisClient(
+    #         endpoint=auth_dict['endpoint'],
+    #         credential=AzureKeyCredential(auth_dict['key']),
+    # )
+    document_analysis_client = DocumentAnalysisClient(
             endpoint='https://westus.api.cognitive.microsoft.com/',
-            credential=AzureKeyCredential('6ae4683c4bdf4e1eb904f8d646206562'),
+            credential=AzureKeyCredential('<enter your key>'),
     )
     print("Pass through init done.")
 
@@ -29,7 +43,8 @@ def run(mini_batch):
     return mini_batch
 
 
-def analyze_read(client, image_file):
+# Get form recognizer output
+def analyze_read(client=None, image_file=None):
     """Get form recognizer analysis"""
     with open(image_file, 'rb') as filename:
         poller = client.begin_analyze_document("prebuilt-read", document=filename, locale='en-US')
@@ -38,7 +53,7 @@ def analyze_read(client, image_file):
 
 
 # Write out and save results to a file
-def write_out_output(result, output_path, filename=None):
+def write_out_output(result=None, output_path=None, filename=None):
     with open(output_path + '/' + filename, 'w') as f:
         f.write(result)
 

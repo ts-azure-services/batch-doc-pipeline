@@ -16,6 +16,7 @@
 https://learn.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-data-access?view=azureml-api-2
 
 
+Note about auto-scale https://learn.microsoft.com/en-us/azure/ai-services/autoscale?tabs=portal
 
 
 This repo is inspired by the design approach laid out by [Alexandre Delarue](https://github.com/aldelar) in his
