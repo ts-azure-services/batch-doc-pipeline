@@ -7,11 +7,6 @@ from azure.ai.ml import MLClient
 from azure.identity import EnvironmentCredential # DefaultAzureCredential
 from dotenv import load_dotenv
 
-# # Paths for output to be persisted
-# blob_store_path="azureml://datastores/workspaceblobstore/paths/parallel-pipeline-pdf-images/"
-# ocr_store_path="azureml://datastores/workspaceblobstore/paths/parallel-pipeline-ocr-outputs/"
-
-
 if __name__ == "__main__":
     load_dotenv('./variables.env')
     
@@ -55,7 +50,7 @@ if __name__ == "__main__":
         return {"ocr_job_output": ocr_conversion.outputs.job_output_path}
 
     # INSTANTIATE THE PIPELINE
-    pipeline = par_pipeline(pdf_inputs=Input(type=AssetTypes.URI_FOLDER, path=args.input_datastore),)
+    pipeline = par_pipeline(pdf_inputs=Input(type=AssetTypes.URI_FOLDER, path=args.input_datastore))
     pipeline.outputs.ocr_job_output = Output(type=AssetTypes.URI_FOLDER, path=args.output_datastore)
 
     # SUBMIT THE PIPELINE JOB

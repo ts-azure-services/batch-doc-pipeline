@@ -29,7 +29,7 @@ def run(mini_batch):
 
 
 # Get form recognizer output
-def analyze_read(client=None, image_file=None):
+def analyze_read(client, image_file):
     """Get form recognizer analysis"""
     with open(image_file, 'rb') as filename:
         poller = client.begin_analyze_document("prebuilt-read", document=filename, locale='en-US')
@@ -38,7 +38,7 @@ def analyze_read(client=None, image_file=None):
 
 
 # Write out and save results to a file
-def write_out_output(result=None, output_path=None, filename=None):
+def write_out_output(result, output_path, filename):
     with open(output_path + '/' + filename, 'w') as f:
         f.write(result)
 
@@ -55,5 +55,4 @@ def get_ocr_from_image(file_path):
         os.makedirs(outputPath)
 
     result = analyze_read(client=document_analysis_client, image_file=file_path)
-    # logging.info(f"Content for {image_filenames[i]}: {result}")
     write_out_output(result=result, output_path=outputPath, filename=image_filename)
