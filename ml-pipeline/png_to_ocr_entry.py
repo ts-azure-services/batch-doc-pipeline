@@ -1,13 +1,13 @@
-"""Script to create images from PDF files"""
+## Script to create text files from PDFs
 import os
 import argparse
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
 
-
 def init():
     global OUTPUT_PATH
     parser = argparse.ArgumentParser()
+    parser.add_argument("--key_vault_secret", type=str, default=0)
     parser.add_argument("--job_output_path", type=str, default=0)
     args, _ = parser.parse_known_args()
     OUTPUT_PATH = args.job_output_path
@@ -15,7 +15,7 @@ def init():
     global document_analysis_client
     document_analysis_client = DocumentAnalysisClient(
             endpoint='https://westus.api.cognitive.microsoft.com/',
-            credential=AzureKeyCredential('<input key>'),
+        credential=AzureKeyCredential(args.key_vault_secret)
     )
     print("Pass through init done.")
 
