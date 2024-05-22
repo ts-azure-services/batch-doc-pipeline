@@ -54,7 +54,7 @@ if __name__ == "__main__":
             entry_script="./ml-pipeline/png_to_ocr_entry.py",
             program_arguments="--key_vault_secret ${{inputs.key_vault_secret}} "
             "--job_output_path ${{outputs.job_output_path}} ",
-            environment="form-rec-env:3",
+            environment="form-rec-env:1",
         ),
         is_deterministic=False,
     )
