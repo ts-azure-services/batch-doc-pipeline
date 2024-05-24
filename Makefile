@@ -40,7 +40,7 @@ create-datastores:
 ## If running in the cloud shell, upload the azure-ai-studio pdf
 # Then, use the script below to generate several PDFs out of this base PDF and upload to blob
 input_file="./azure-ai-studio.pdf"
-number_of_pdfs=5
+number_of_pdfs=2
 create-pdfs:
 	rm -rf ./pdf-files
 	mkdir -p ./pdf-files
@@ -57,6 +57,41 @@ run-pipeline:
 	.venv/bin/python ./ml-pipeline/main.py \
 		--input_datastore $(primary_datastore) \
 		--output_datastore $(output_datastore)
+
+# Blob manipulation operations
+list-blobs:
+	.venv/bin/python ./blob-operations/blob_changes.py \
+		--list_blob \
+		-s $(pdf_blob) \
+		-d $(text_blob)
+
+delete-source-blob:
+	.venv/bin/python ./blob-operations/blob_changes.py \
+		-ds \
+		-s $(pdf_blob) \
+		-d $(text_blob)
+
+delete-dest-blob:
+	.venv/bin/python ./blob-operations/blob_changes.py \
+		-dd \
+		-s $(pdf_blob) \
+		-d $(text_blob)
+
+compare-blobs:
+	.venv/bin/python ./blob-operations/blob_changes.py \
+		--compare \
+		-s $(pdf_blob) \
+		-d $(text_blob)
+
+compare-blobs-delete:
+	.venv/bin/python ./blob-operations/blob_changes.py \
+		--compare \
+		-dsf \
+		-s $(pdf_blob) \
+		-d $(text_blob)
+
+
+
 
 # Commit local branch changes
 branch=$(shell git symbolic-ref --short HEAD)
