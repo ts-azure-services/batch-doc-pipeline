@@ -12,3 +12,4 @@ capabilities and Azure Form Recognizer (soon to be Azure AI Document Intelligenc
 - In terms of RBAC, both the Azure ML workspace and the service principal have `Contributor` access to the storage account.
   Additionally, the workspace has `Storage Blob Data Contributor` access to the storage account.
 - Note about for Form Recognizer, you can [auto-scale](https://learn.microsoft.com/en-us/azure/ai-services/autoscale?tabs=portal) to avoid throttling issues.
+- Critical to understand which SDK version maps to which API as listed [here](https://learn.microsoft.com/en-us/python/api/overview/azure/ai-formrecognizer-readme?view=azure-python).
