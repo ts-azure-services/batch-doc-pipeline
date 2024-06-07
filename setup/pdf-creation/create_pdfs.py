@@ -2,14 +2,14 @@ import argparse
 import random
 import uuid
 import logging
-import PyPDF2
+from pypdf import PdfReader, PdfWriter
 
 def create_random_pdf(input_pdf, num_of_pdfs):
     """Create new PDFs based upon page count and number"""
-    reader = PyPDF2.PdfReader(open(input_pdf, 'rb'))
+    reader = PdfReader(open(input_pdf, 'rb'))
 
     for _ in range(num_of_pdfs):
-        writer = PyPDF2.PdfWriter()
+        writer = PdfWriter()
         filename = f"{uuid.uuid4()}.pdf"
         num_pages = random.randint(100,250)
         for _ in range(num_pages):
