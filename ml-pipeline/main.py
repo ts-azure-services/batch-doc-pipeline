@@ -44,10 +44,10 @@ if __name__ == "__main__":
         input_data="${{inputs.job_data_path}}",
         outputs=dict(job_output_path=Output(type=AssetTypes.URI_FOLDER)),
         instance_count=4,
-        max_concurrency_per_instance=2,
+        max_concurrency_per_instance=3,
         mini_batch_size="1",
         mini_batch_error_threshold=1,
-        retry_settings=dict(max_retries=2, timeout=60),
+        retry_settings=dict(max_retries=2, timeout=600),
         logging_level="INFO",
         task=RunFunction(
             code="./",

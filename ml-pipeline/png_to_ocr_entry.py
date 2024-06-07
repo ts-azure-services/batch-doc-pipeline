@@ -15,7 +15,8 @@ def init():
     global document_analysis_client
     document_analysis_client = DocumentAnalysisClient(
             endpoint='https://westus.api.cognitive.microsoft.com/',
-        credential=AzureKeyCredential(args.key_vault_secret)
+        credential=AzureKeyCredential(args.key_vault_secret),
+        # api_version="2024-02-29-preview",
     )
     print("Pass through init done.")
 

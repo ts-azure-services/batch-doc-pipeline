@@ -23,7 +23,7 @@ if __name__ == "__main__":
     except Exception:
         print("Creating a new cpu compute target...")
         compute = AmlCompute(name=cpu_compute_target,
-                             size="STANDARD_D2_V2",
-                             min_instances=1,
+                             size="STANDARD_DS3_V2",
+                             min_instances=0,
                              max_instances=4)
         ml_client.compute.begin_create_or_update(compute)
