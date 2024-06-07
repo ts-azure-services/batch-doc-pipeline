@@ -100,4 +100,4 @@ git-push:
 	git add . && git commit -m "Changes as of $(now)" && git push -u origin $(branch)
 
 git-pull:
-	git pull origin $(branch)python ./pipeline-parallel/main.py
+	git pull origin $(branch)
