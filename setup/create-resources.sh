@@ -76,8 +76,8 @@ printf "${grn}create blob container for text files...${end}\n"
 blobContainerCreate=$(az storage container create --connection-string $storage_credentials --name "text-files")
 
 
-printf "${grn}get the key vault...${end}\n"
-key_vault=$(az keyvault list -g $resourcegroup --query [].name -o tsv)
+# printf "${grn}get the key vault...${end}\n"
+# key_vault=$(az keyvault list -g $resourcegroup --query [].name -o tsv)
 
 
 # Capture credentials for 'jq' parsing
@@ -93,10 +93,10 @@ clientID=$(sed -e 's/^"//' -e 's/"$//' <<<"$clientID")
 clientSecret=$(sed -e 's/^"//' -e 's/"$//' <<<"$clientSecret")
 tenantID=$(sed -e 's/^"//' -e 's/"$//' <<<"$tenantID")
 
-printf "${grn}assign the key vault administrator RBAC to the service principal for the key vault...${end}\n"
-az role assignment create --role "Key Vault Administrator" --assignee $clientID \
-	--scope "/subscriptions/$sub_id/resourceGroups/$resourcegroup/providers/Microsoft.KeyVault/vaults/$key_vault"
-sleep 1
+# printf "${grn}assign the key vault administrator RBAC to the service principal for the key vault...${end}\n"
+# az role assignment create --role "Key Vault Administrator" --assignee $clientID \
+# 	--scope "/subscriptions/$sub_id/resourceGroups/$resourcegroup/providers/Microsoft.KeyVault/vaults/$key_vault"
+# sleep 1
 
 # Create variables file
 printf "${grn}Writing out service principal variables...${end}\n"
@@ -112,7 +112,7 @@ printf "STORAGE_CONN_STRING=$storage_credentials\n" >> $env_variable_file
 printf "STORAGE_ACCOUNT_KEY=$storage_account_key\n" >> $env_variable_file
 printf "BLOB_CONTAINER_PDF="pdf-files"\n" >> $env_variable_file
 printf "BLOB_CONTAINER_TXT="text-files"\n" >> $env_variable_file
-printf "KEY_VAULT=$key_vault\n" >> $env_variable_file
+# printf "KEY_VAULT=$key_vault\n" >> $env_variable_file
 printf "LOCATION=$location\n" >> $env_variable_file
 printf "ENDPOINT=$endpoint\n" >> $env_variable_file
 printf "COG_RESOURCE=$cognitiveservice\n" >> $env_variable_file

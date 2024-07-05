@@ -4,7 +4,7 @@
 
 venv-setup:
 	rm -rf .venv
-	python3.11 -m venv .venv
+	python3.9 -m venv .venv
 	.venv/bin/python -m pip install --upgrade pip
 	.venv/bin/python -m pip install -r ./requirements.txt
 
@@ -23,8 +23,8 @@ create-env:
 	.venv/bin/python ./setup/aml-setup/env.py --name "form-rec-env" \
 		--conda_file "./setup/aml-env-config/form-rec-env.yml"
 
-create-kv:
-	.venv/bin/python ./setup/aml-setup/create-kv.py
+# create-kv:
+# 	.venv/bin/python ./setup/aml-setup/create-kv.py
 
 pdf_blob=$(shell cat variables.env | grep "BLOB_CONTAINER_PDF" | cut -d "=" -f 2 | xargs)
 text_blob=$(shell cat variables.env | grep "BLOB_CONTAINER_TXT" | cut -d "=" -f 2 | xargs)
@@ -40,7 +40,7 @@ create-datastores:
 ## If running in the cloud shell, upload the azure-ai-studio pdf
 # Then, use the script below to generate several PDFs out of this base PDF and upload to blob
 input_file="./azure-ai-studio.pdf"
-number_of_pdfs=150
+number_of_pdfs=10
 create-pdfs:
 	rm -rf ./pdf-files
 	mkdir -p ./pdf-files
@@ -50,6 +50,12 @@ upload-files:
 	.venv/bin/python ./setup/pdf-creation/upload_data.py
 
 
+# Substitute the <enter api key> with the right COG KEY
+cog_key=$(shell cat variables.env | grep "COG_KEY" | cut -d "=" -f 2 | xargs)
+sub-api-key:
+	sed -i 's/<enter api key>/$(cog_key)/g' ./ml-pipeline/main.py
+
+
 # Run ML pipeline
 primary_datastore="azureml://datastores/pdfinputfiles/paths/"
 output_datastore="azureml://datastores/textfiles/paths/"
@@ -57,40 +63,6 @@ run-pipeline:
 	.venv/bin/python ./ml-pipeline/main.py \
 		--input_datastore $(primary_datastore) \
 		--output_datastore $(output_datastore)
-
-# Blob manipulation operations
-list-blobs:
-	.venv/bin/python ./blob-operations/blob_changes.py \
-		--list_blob \
-		-s $(pdf_blob) \
-		-d $(text_blob)
-
-delete-source-blob:
-	.venv/bin/python ./blob-operations/blob_changes.py \
-		-ds \
-		-s $(pdf_blob) \
-		-d $(text_blob)
-
-delete-dest-blob:
-	.venv/bin/python ./blob-operations/blob_changes.py \
-		-dd \
-		-s $(pdf_blob) \
-		-d $(text_blob)
-
-compare-blobs:
-	.venv/bin/python ./blob-operations/blob_changes.py \
-		--compare \
-		-s $(pdf_blob) \
-		-d $(text_blob)
-
-compare-blobs-delete:
-	.venv/bin/python ./blob-operations/blob_changes.py \
-		--compare \
-		-dsf \
-		-s $(pdf_blob) \
-		-d $(text_blob)
-
-
 
 
 # Commit local branch changes

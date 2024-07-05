@@ -6,7 +6,7 @@ from azure.ai.ml.parallel import parallel_run_function, RunFunction
 from azure.ai.ml import MLClient
 from azure.identity import EnvironmentCredential # DefaultAzureCredential
 from dotenv import load_dotenv
-from azure.keyvault.secrets import SecretClient
+# from azure.keyvault.secrets import SecretClient
 from azure.identity import ClientSecretCredential
 
 if __name__ == "__main__":
@@ -25,8 +25,8 @@ if __name__ == "__main__":
                                         client_id=os.environ['AZURE_CLIENT_ID'],
                                         client_secret=os.environ['AZURE_CLIENT_SECRET'],
                                         )
-    client = SecretClient(vault_url=KVUri, credential=credential)
-    retrieved_secret = client.get_secret("frkey")
+    # client = SecretClient(vault_url=KVUri, credential=credential)
+    # retrieved_secret = client.get_secret("frkey")
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_datastore", type=str)
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     # DEFINE THE PIPELINE
     @dsl.pipeline(compute='cpu-cluster',)
     def par_pipeline(pdf_inputs):
-        ocr_conversion = ocr_convert_component(job_data_path=pdf_inputs, key_vault_secret=retrieved_secret.value)
+        ocr_conversion = ocr_convert_component(job_data_path=pdf_inputs, key_vault_secret="<enter api key>")
         return {"ocr_job_output": ocr_conversion.outputs.job_output_path}
 
     # INSTANTIATE THE PIPELINE
