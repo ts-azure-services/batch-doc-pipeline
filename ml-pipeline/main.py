@@ -18,8 +18,8 @@ if __name__ == "__main__":
                      workspace_name=os.environ['WORKSPACE_NAME'],
                          )
 
-    # Get key vault key
-    KVUri = f"https://{os.environ['KEY_VAULT']}.vault.azure.net"
+    # # Get key vault key
+    # KVUri = f"https://{os.environ['KEY_VAULT']}.vault.azure.net"
 
     credential = ClientSecretCredential(tenant_id=os.environ['AZURE_TENANT_ID'],
                                         client_id=os.environ['AZURE_CLIENT_ID'],
