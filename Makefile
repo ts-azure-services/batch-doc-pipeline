@@ -51,6 +51,7 @@ upload-files:
 
 
 # Substitute the <enter api key> with the right COG KEY
+# Assumes sed available on Linux/Unix distribution
 cog_key=$(shell cat variables.env | grep "COG_KEY" | cut -d "=" -f 2 | xargs)
 sub-api-key:
 	sed -i 's/<enter api key>/$(cog_key)/g' ./ml-pipeline/main.py
