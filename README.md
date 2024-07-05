@@ -1,6 +1,6 @@
 # batch-doc-pipeline
 The purpose of this repo is to setup a batch pipeline to process PDFs into text files leveraging Azure ML's native pipeline
-capabilities and Azure Form Recognizer (soon to be Azure AI Document Intelligence). This is a custom version of this [repo](https://github.com/ts-azure-services/document-extraction-pipeline).
+capabilities and Azure Form Recognizer (soon to be Azure AI Document Intelligence). This is a custom version of this [repo](https://github.com/ts-azure-services/document-extraction-pipeline), though this repo does not split PDFs by pages.
 
 ### Other considerations
 - With PDF file names, ensure special characters like `+` don't cause issues while processing. This is not specifically handled in
